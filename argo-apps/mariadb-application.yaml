@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mariadb-application
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/andrewp88/argocd
+    targetRevision: HEAD
+    path: mariadb
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: database
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
