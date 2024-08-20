@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mariadb-galera
+  namespace: argocd
+spec:
+  project: default
+  source:
+    chart: mariadb-galera
+    repoURL: registry-1.docker.io/bitnamicharts  # note: the oci:// syntax is not included.
+    targetRevision: 14.0.9
+    helm:
+      valueFiles:
+      - mariadb/maiadb-galera-values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: galera
