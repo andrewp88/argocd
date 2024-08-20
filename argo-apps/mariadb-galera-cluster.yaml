@@ -5,13 +5,16 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
+  sources:
+  - repoURL: registry-1.docker.io/bitnamicharts  # note: the oci:// syntax is not included.
     chart: mariadb-galera
-    repoURL: registry-1.docker.io/bitnamicharts  # note: the oci:// syntax is not included.
     targetRevision: 14.0.9
     helm:
       valueFiles:
-      - argo-apps/mariadb-galera-values.yaml
+      - $values/argo-apps/mariadb-galera-values.yaml
+  - repoURL: 'https://github.com/andrewp88/argocd.git'
+    targetRevision: main
+    ref: values
   destination:
     server: https://kubernetes.default.svc
     namespace: galera
